@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>圣诞快乐｜我的宝宝天天开心</title>
+  <style>
+    :root{
+      --bg1:#0b1a2a;
+      --bg2:#123a2e;
+      --card: rgba(255,255,255,.08);
+      --text: #ffffff;
+      --muted: rgba(255,255,255,.75);
+      --accent:#ff5a7a;
+      --accent2:#ffd166;
+      --good:#5eead4;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 700px at 20% 10%, rgba(255,255,255,.10), transparent 60%),
+                  linear-gradient(135deg, var(--bg1), var(--bg2));
+      overflow:hidden;
+    }
+
+    .wrap{position:relative; min-height:100%; display:grid; place-items:center; padding:28px 16px; z-index:2;}
+
+    .card{
+      width:min(880px, 100%);
+      background: var(--card);
+      border:1px solid rgba(255,255,255,.14);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border-radius:24px;
+      padding:22px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+    }
+
+    header{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:14px;}
+    .title{display:flex; align-items:center; gap:12px;}
+
+    .badge{
+      width:44px;height:44px;border-radius:14px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.6), rgba(255,255,255,.15) 55%, rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.18);
+      display:grid; place-items:center; font-size:22px; user-select:none;
+    }
+
+    h1{font-size: clamp(22px, 3.4vw, 34px); line-height:1.05; margin:0; letter-spacing:.6px;}
+    .sub{margin:6px 0 0; color:var(--muted); font-size:14px;}
+
+    .grid{display:grid; grid-template-columns: 1.2fr .8fr; gap:16px;}
+    @media (max-width: 860px){.grid{grid-template-columns:1fr}}
+
+    .panel{border:1px solid rgba(255,255,255,.14); border-radius:18px; padding:16px; background: rgba(0,0,0,.10);}
+
+    .bigText{margin:6px 0 10px; font-size: clamp(22px, 4.2vw, 44px); font-weight:800; letter-spacing:1px;}
+    .bigText .hl{color:var(--accent2)}
+
+    .controls{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:10px;}
+
+    button{
+      appearance:none;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:600;
+      letter-spacing:.2px;
+      transition: transform .08s ease, background .2s ease;
+      user-select:none;
+    }
+    button:hover{background: rgba(255,255,255,.16)}
+    button:active{transform: translateY(1px) scale(.99)}
+
+    .primary{background: rgba(255,90,122,.22); border-color: rgba(255,90,122,.5);}
+    .primary:hover{background: rgba(255,90,122,.30)}
+
+    label{font-size:13px; color:var(--muted); display:flex; gap:8px; align-items:center;}
+    input{
+      width:min(220px, 100%);
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.14);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      outline:none;
+    }
+    input:focus{border-color: rgba(255,209,102,.6)}
+
+    .treeWrap{display:grid; place-items:center; gap:10px; min-height:360px; position:relative;}
+
+    /* 固定高度代替 aspect-ratio，提高兼容性 */
+    .tree{width:min(320px, 90%); height:420px; position:relative; filter: drop-shadow(0 18px 35px rgba(0,0,0,.35)); user-select:none;}
+
+    .star{position:absolute; top:-10px; left:50%; transform:translateX(-50%); font-size:42px; text-shadow: 0 0 18px rgba(255,209,102,.75); animation: twinkle 1.8s ease-in-out infinite;}
+    @keyframes twinkle{0%,100%{transform:translateX(-50%) scale(1)} 50%{transform:translateX(-50%) scale(1.07)}}
+
+    .layer{position:absolute; left:50%; transform:translateX(-50%); width:100%; height:100%;}
+
+    .tri{position:absolute; left:50%; transform:translateX(-50%); width:0; height:0;
+      border-left:140px solid transparent; border-right:140px solid transparent; border-bottom:160px solid rgba(94,234,212,.16);
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,.28)); border-radius: 10px;}
+
+    .tri.t2{ top:70px; border-left-width:120px; border-right-width:120px; border-bottom-width:150px; border-bottom-color: rgba(94,234,212,.20)}
+    .tri.t3{ top:140px; border-left-width:100px; border-right-width:100px; border-bottom-width:140px; border-bottom-color: rgba(94,234,212,.24)}
+
+    .trunk{position:absolute; bottom:18px; left:50%; transform:translateX(-50%); width:72px; height:64px; border-radius:16px;
+      background: rgba(255,209,102,.22); border:1px solid rgba(255,209,102,.45);}
+
+    .ornament{position:absolute; width:18px; height:18px; border-radius:50%; background: rgba(255,90,122,.85);
+      border:1px solid rgba(255,255,255,.35); box-shadow: 0 0 16px rgba(255,90,122,.35);
+      cursor:pointer; transition: transform .12s ease;}
+    .ornament:hover{transform: scale(1.12)}
+
+    .o1{top:86px; left:45%}
+    .o2{top:116px; left:56%; background: rgba(255,209,102,.9); box-shadow:0 0 16px rgba(255,209,102,.35)}
+    .o3{top:160px; left:40%; background: rgba(94,234,212,.9); box-shadow:0 0 16px rgba(94,234,212,.35)}
+    .o4{top:186px; left:58%; background: rgba(255,255,255,.75); box-shadow:0 0 16px rgba(255,255,255,.25)}
+    .o5{top:220px; left:48%; background: rgba(255,90,122,.85)}
+
+    .toast{position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
+      background: rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.18);
+      padding:10px 12px; border-radius:14px; font-size:14px; color: rgba(255,255,255,.92);
+      opacity:0; pointer-events:none; transition: opacity .18s ease, transform .18s ease;
+      z-index:9; max-width:min(520px, calc(100% - 32px)); text-align:center;
+      -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    }
+    .toast.show{opacity:1; transform:translateX(-50%) translateY(-6px)}
+
+    canvas#snow{position:fixed; inset:0; z-index:1; pointer-events:none;}
+    canvas#confetti{position:fixed; inset:0; z-index:3; pointer-events:none;}
+
+    .footer{margin-top:12px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; color: rgba(255,255,255,.65); font-size:12px;}
+    .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:12px; padding:2px 6px; border-radius:8px; border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08); color: rgba(255,255,255,.85);}
+  </style>
+</head>
+<body>
+  <canvas id="snow"></canvas>
+  <canvas id="confetti"></canvas>
+
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <div class="title">
+          <div class="badge">🎄</div>
+          <div>
+            <h1>圣诞快乐</h1>
+            <p class="sub">单文件网页：点彩球、下雪、撒花～（兼容性已加强）</p>
+          </div>
+        </div>
+        <div class="controls">
+          <label>
+            宝宝昵称
+            <input id="nameInput" value="我的宝宝" maxlength="10" />
+          </label>
+          <button id="applyName" class="primary">更新祝福</button>
+        </div>
+      </header>
+
+      <div class="grid">
+        <section class="panel">
+          <div class="bigText" id="wishText">
+            <span class="hl">我的宝宝</span>天天开心 ✨
+          </div>
+          <div style="color:var(--muted); font-size:14px; line-height:1.7;">
+            <div>• 点击右侧圣诞树上的彩球，会出现不同的小祝福。</div>
+            <div>• 点击 <span class="kbd">撒花</span> 会触发庆祝动画。</div>
+            <div>• 点击 <span class="kbd">下雪</span> 可以开关雪花。</div>
+          </div>
+
+          <div class="controls" style="margin-top:14px;">
+            <button id="confettiBtn" class="primary">撒花 🎉</button>
+            <button id="snowBtn">下雪：开 ❄️</button>
+            <button id="randomWish">随机一句 ✨</button>
+          </div>
+
+          <div class="footer">
+            <div>用法：保存为 <span class="kbd">index.html</span>，双击打开。</div>
+            <div>键盘：<span class="kbd">空格</span> 撒花｜<span class="kbd">S</span> 开关雪</div>
+          </div>
+        </section>
+
+        <aside class="panel">
+          <div class="treeWrap">
+            <div class="tree" aria-label="Christmas tree">
+              <div class="star">⭐</div>
+              <div class="layer">
+                <div class="tri t1" style="top:10px;"></div>
+                <div class="tri t2"></div>
+                <div class="tri t3"></div>
+                <div class="trunk"></div>
+                <div class="ornament o1" data-wish="愿你每天都被温柔对待 💛"></div>
+                <div class="ornament o2" data-wish="愿你健康长大，笑容灿烂 😊"></div>
+                <div class="ornament o3" data-wish="愿你勇敢探索世界，天天好奇 👣"></div>
+                <div class="ornament o4" data-wish="愿你被爱包围，平安喜乐 🕊️"></div>
+                <div class="ornament o5" data-wish="愿你梦想成真，心想事成 🌟"></div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    var toastEl = document.getElementById('toast');
+    var toastTimer = null;
+    function toast(msg){
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      if(toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 1800);
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // --- Wish text ---
+    var wishTextEl = document.getElementById('wishText');
+    var nameInput = document.getElementById('nameInput');
+    var applyNameBtn = document.getElementById('applyName');
+
+    function setWishName(name){
+      var safe = (name || '我的宝宝').trim().slice(0, 10) || '我的宝宝';
+      wishTextEl.innerHTML = '<span class="hl">' + escapeHtml(safe) + '</span>天天开心 ✨';
+      toast('已更新：' + safe + '天天开心 ✨');
+    }
+
+    applyNameBtn.addEventListener('click', function(){ setWishName(nameInput.value); });
+    nameInput.addEventListener('keydown', function(e){ if(e.key === 'Enter') setWishName(nameInput.value); });
+
+    // --- Ornaments ---
+    var ornaments = document.querySelectorAll('.ornament');
+    ornaments.forEach(function(el){
+      el.addEventListener('click', function(){
+        toast(el.dataset.wish || '圣诞快乐！');
+        if(el.animate){
+          el.animate([{ transform: 'scale(1)' },{ transform: 'scale(1.25)' },{ transform: 'scale(1)' }], { duration: 260, easing: 'ease-out' });
+        }
+      });
+    });
+
+    // --- Random wishes ---
+    var wishes = [
+      '愿你每天都被温柔对待 💛',
+      '愿你健康长大，笑容灿烂 😊',
+      '愿你勇敢探索世界，天天好奇 👣',
+      '愿你被爱包围，平安喜乐 🕊️',
+      '愿你梦想成真，心想事成 🌟',
+      '圣诞铃铛响叮当，快乐常相伴 🔔',
+      '今天也要开开心心哟 🥰'
+    ];
+    document.getElementById('randomWish').addEventListener('click', function(){
+      var msg = wishes[Math.floor(Math.random() * wishes.length)];
+      toast(msg);
+    });
+
+    // --- Snow canvas ---
+    var snowCanvas = document.getElementById('snow');
+    var sctx = snowCanvas.getContext('2d');
+    var snowOn = true;
+    var flakes = [];
+
+    function makeFlake(){
+      return {
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        r: 1 + Math.random() * 3.2,
+        v: 0.6 + Math.random() * 1.6,
+        drift: -0.6 + Math.random() * 1.2,
+        wobble: Math.random() * Math.PI * 2
+      };
+    }
+
+    function resizeSnow(){
+      var dpr = Math.max(1, window.devicePixelRatio || 1);
+      snowCanvas.width = Math.floor(window.innerWidth * dpr);
+      snowCanvas.height = Math.floor(window.innerHeight * dpr);
+      snowCanvas.style.width = window.innerWidth + 'px';
+      snowCanvas.style.height = window.innerHeight + 'px';
+      sctx.setTransform(1,0,0,1,0,0);
+      sctx.scale(dpr, dpr);
+      flakes = Array.from({length: Math.min(180, Math.floor(window.innerWidth / 6))}, function(){ return makeFlake(); });
+    }
+
+    function drawSnow(){
+      sctx.clearRect(0,0, window.innerWidth, window.innerHeight);
+      if(!snowOn) return;
+      for(var i=0;i<flakes.length;i++){
+        var f = flakes[i];
+        f.wobble += 0.01;
+        f.x += f.drift + Math.sin(f.wobble) * 0.25;
+        f.y += f.v;
+        if(f.y > window.innerHeight + 10){ f.y = -10; f.x = Math.random() * window.innerWidth; }
+        if(f.x < -10) f.x = window.innerWidth + 10;
+        if(f.x > window.innerWidth + 10) f.x = -10;
+
+        sctx.beginPath();
+        sctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+        sctx.fillStyle = 'rgba(255,255,255,.78)';
+        sctx.fill();
+      }
+    }
+
+    // --- Confetti canvas ---
+    var confCanvas = document.getElementById('confetti');
+    var cctx = confCanvas.getContext('2d');
+    var confetti = [];
+    var confettiActive = false;
+
+    function resizeConfetti(){
+      var dpr = Math.max(1, window.devicePixelRatio || 1);
+      confCanvas.width = Math.floor(window.innerWidth * dpr);
+      confCanvas.height = Math.floor(window.innerHeight * dpr);
+      confCanvas.style.width = window.innerWidth + 'px';
+      confCanvas.style.height = window.innerHeight + 'px';
+      cctx.setTransform(1,0,0,1,0,0);
+      cctx.scale(dpr, dpr);
+    }
+
+    function burstConfetti(){
+      var count = 120;
+      var cx = window.innerWidth * (0.35 + Math.random() * 0.3);
+      var cy = window.innerHeight * 0.25;
+      for(var i=0;i<count;i++){
+        confetti.push({
+          x: cx, y: cy,
+          w: 6 + Math.random() * 6,
+          h: 3 + Math.random() * 5,
+          vx: -3 + Math.random() * 6,
+          vy: -4 + Math.random() * 3,
+          rot: Math.random() * Math.PI,
+          vr: -0.2 + Math.random() * 0.4,
+          life: 70 + Math.random() * 50,
+          alpha: 1,
+          kind: Math.random() < 0.5 ? 'rect' : 'dot'
+        });
+      }
+      confettiActive = true;
+      toast('叮～快乐已送达 🎁');
+    }
+
+    function drawConfetti(){
+      cctx.clearRect(0,0, window.innerWidth, window.innerHeight);
+      if(!confettiActive) return;
+      var gravity = 0.08;
+      confetti = confetti.filter(function(p){ return p.life > 0; });
+      for(var i=0;i<confetti.length;i++){
+        var p = confetti[i];
+        p.vy += gravity;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.vr;
+        p.life -= 1;
+        p.alpha = Math.max(0, p.life / 90);
+
+        cctx.save();
+        cctx.translate(p.x, p.y);
+        cctx.rotate(p.rot);
+        cctx.globalAlpha = p.alpha;
+        var hue = (p.x * 0.6 + p.y * 0.2) % 360;
+        cctx.fillStyle = 'hsla(' + hue + ', 85%, 70%, ' + p.alpha + ')';
+        if(p.kind === 'rect') cctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        else { cctx.beginPath(); cctx.arc(0,0, Math.min(p.w,p.h)/2, 0, Math.PI*2); cctx.fill(); }
+        cctx.restore();
+      }
+      if(confetti.length === 0) confettiActive = false;
+    }
+
+    // --- Buttons & keyboard ---
+    var snowBtn = document.getElementById('snowBtn');
+    snowBtn.addEventListener('click', function(){
+      snowOn = !snowOn;
+      snowBtn.textContent = snowOn ? '下雪：开 ❄️' : '下雪：关 ☀️';
+      toast(snowOn ? '雪花开始飘啦 ❄️' : '雪花暂停啦 ☀️');
+    });
+
+    document.getElementById('confettiBtn').addEventListener('click', burstConfetti);
+
+    window.addEventListener('keydown', function(e){
+      if(e.key === ' '){ e.preventDefault(); burstConfetti(); }
+      if(String(e.key).toLowerCase() === 's'){
+        snowOn = !snowOn;
+        snowBtn.textContent = snowOn ? '下雪：开 ❄️' : '下雪：关 ☀️';
+        toast(snowOn ? '雪花开始飘啦 ❄️' : '雪花暂停啦 ☀️');
+      }
+    });
+
+    function loop(){
+      drawSnow();
+      drawConfetti();
+      requestAnimationFrame(loop);
+    }
+
+    function init(){
+      resizeSnow();
+      resizeConfetti();
+      loop();
+      toast('圣诞快乐！点击彩球试试～');
+    }
+
+    window.addEventListener('resize', function(){ resizeSnow(); resizeConfetti(); });
+    init();
+  </script>
+</body>
+</html>
